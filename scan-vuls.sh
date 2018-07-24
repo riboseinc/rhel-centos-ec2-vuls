@@ -31,7 +31,7 @@ main() {
 	[ "${EUID}" -ne 0 ] && \
 		errx "need root"
 
-	local -r vulsenv="/etc/profile.d/vulsenv.sh"
+	local -r vulsenv="/etc/profile.d/vuls-env.sh"
 
 	echo "${__progname}: sourcing '${vulsenv}'"
 	. "${vulsenv}" || \
