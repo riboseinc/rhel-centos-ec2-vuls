@@ -1,0 +1,15 @@
+= rhel-centos-ec2-vuls
+
+
+== Description
+
+
+=== Installation
+
+
+=== Execution
+
+
+== Contributions
+
+Feel free to open an issue or to send a pull request.
