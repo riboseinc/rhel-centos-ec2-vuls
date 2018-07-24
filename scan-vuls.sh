@@ -2,10 +2,10 @@
 #
 # scan-vuls.sh
 #
-# Setup and execute the Vuls vulnerability scanner (https://vuls.io/) for RHEL/CentOS on EC2
+# Setup and execute the Vuls vulnerability scanner (https://vuls.io) for RHEL/CentOS on EC2
 #
 # This script does the following:
-# 1) Create a basic Vuls configuration using the ec2-user and the private IP obtained
+# 1) Create a basic Vuls configuration using 'ec2-user' or 'centos' and the private IP obtained
 #    from the EC2 metadata service;
 # 2) Create a SSH keypair so Vuls can ssh into localhost;
 # 3) Run a scan;
@@ -44,7 +44,19 @@ main() {
 
 	local -r vulspath="/usr/local/vuls"
 	local -r configpath="/usr/local/etc"
-	local -r user="ec2-user"
+
+	local -r ec2user="ec2-user"
+	local -r centos="centos"
+
+	getent passwd "${ec2user}" >/dev/null
+	if [ $? -eq 0 ]; then
+		local -r user="${ec2user}"
+	else
+		getent passwd "${centos}" >/dev/null || \
+			errx "neither user '${ec2user}' or '${centos}' exist on this system"
+
+		local -r user="${centos}"
+	fi
 
 	local -r configfile="/${configpath}/vuls-config.toml"
 	local -r ip="$(curl -s curl http://169.254.169.254/latest/meta-data/local-ipv4)"

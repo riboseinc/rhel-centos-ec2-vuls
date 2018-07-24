@@ -1,13 +1,18 @@
 = rhel-centos-ec2-vuls
 
-These scrips are used to install and execute the Vuls vulnerability scanner (https://vuls.io) running RHEL/CentOS on AWS EC2
+Install and execute the Vuls vulnerability scanner (https://vuls.io) for RHEL/CentOS on AWS EC2
 
 
 == Description
 
 Vuls is an open-source, agent-less vulnerability scanner based on information from NVD, OVAL, etc.
 
-Use these two scripts to install Vuls and run vulnerability scans on your RHEL/CentOS instance on AWS EC2.
+The project currently does not provide RPMs and there are some minor issues you need to fix to get it to run on AWS EC2. Use these two scripts to install Vuls and run vulnerability scans on your RHEL/CentOS instance on AWS EC2.
+
+There are some "special" actions that these scripts take care of to get Vuls to work on RHEL/CentOS EC2:
+1. Temporarily set read permissions on '/etc/pki/rhui/*' because non-privileged users typically don't have read permissions there
+2. The local user 'ec2-user' or 'centos' is used for the configuration
+3. The instance its IP address to conduct a scan is obtained from `local-ipv4` in the metadata service
 
 
 === Installation
@@ -16,12 +21,176 @@ Use these two scripts to install Vuls and run vulnerability scans on your RHEL/C
 sudo ./install-vuls.sh
 ```
 
+==== Example installation on RHEL 7.5
 
-=== Execution
+```console
+[root@ip-10-149-81-173 ~]# ./install-vuls.sh 
+install-vuls.sh: creating '/etc/profile.d/vuls-env.sh'
+install-vuls.sh: sourcing '/etc/profile.d/vuls-env.sh'
+install-vuls.sh: creating '/usr/local/vuls'
+install-vuls.sh: creating '/var/log/vuls'
+install-vuls.sh: go get 'github.com/kotakanbe/go-cve-dictionary'
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2004'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:39:29]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2004.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 2s
+[Jul 24 07:39:32]  INFO Fetched 2702 CVEs
+[Jul 24 07:39:32]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:39:32]  INFO Inserting CVEs...
+ 2702 / 2702 [=====================================================================================================] 100.00% 6s
+[Jul 24 07:39:38]  INFO Refreshed 2702 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2005'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:39:38]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2005.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 3s
+[Jul 24 07:39:42]  INFO Fetched 4749 CVEs
+[Jul 24 07:39:42]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:39:42]  INFO Inserting CVEs...
+ 4749 / 4749 [=====================================================================================================] 100.00% 9s
+[Jul 24 07:39:52]  INFO Refreshed 4749 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2006'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:39:52]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2006.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 4s
+[Jul 24 07:39:56]  INFO Fetched 7127 CVEs
+[Jul 24 07:39:56]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:39:56]  INFO Inserting CVEs...
+ 7127 / 7127 [====================================================================================================] 100.00% 15s
+[Jul 24 07:40:11]  INFO Refreshed 7127 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2007'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:40:11]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2007.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 8s
+[Jul 24 07:40:20]  INFO Fetched 6556 CVEs
+[Jul 24 07:40:20]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:40:20]  INFO Inserting CVEs...
+ 6556 / 6556 [====================================================================================================] 100.00% 13s
+[Jul 24 07:40:33]  INFO Refreshed 6556 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2008'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:40:33]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2008.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 5s
+[Jul 24 07:40:38]  INFO Fetched 7146 CVEs
+[Jul 24 07:40:38]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:40:38]  INFO Inserting CVEs...
+ 7146 / 7146 [====================================================================================================] 100.00% 18s
+[Jul 24 07:40:57]  INFO Refreshed 7146 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2009'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:40:57]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2009.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 4s
+[Jul 24 07:41:02]  INFO Fetched 4962 CVEs
+[Jul 24 07:41:02]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:41:02]  INFO Inserting CVEs...
+ 4962 / 4962 [====================================================================================================] 100.00% 20s
+[Jul 24 07:41:23]  INFO Refreshed 4962 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2010'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:41:23]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2010.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 5s
+[Jul 24 07:41:28]  INFO Fetched 5073 CVEs
+[Jul 24 07:41:28]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:41:28]  INFO Inserting CVEs...
+ 5073 / 5073 [====================================================================================================] 100.00% 33s
+[Jul 24 07:42:02]  INFO Refreshed 5073 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2011'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:42:02]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2011.xml.gz
+ 1 / 1 [==========================================================================================================] 100.00% 12s
+[Jul 24 07:42:15]  INFO Fetched 4618 CVEs
+[Jul 24 07:42:15]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:42:15]  INFO Inserting CVEs...
+ 4618 / 4618 [==================================================================================================] 100.00% 1m41s
+[Jul 24 07:43:57]  INFO Refreshed 4618 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2012'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:43:57]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2012.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 5s
+[Jul 24 07:44:03]  INFO Fetched 5548 CVEs
+[Jul 24 07:44:03]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:44:03]  INFO Inserting CVEs...
+ 5548 / 5548 [====================================================================================================] 100.00% 32s
+[Jul 24 07:44:35]  INFO Refreshed 5548 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2013'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:44:35]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2013.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 5s
+[Jul 24 07:44:41]  INFO Fetched 6152 CVEs
+[Jul 24 07:44:41]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:44:41]  INFO Inserting CVEs...
+ 6152 / 6152 [====================================================================================================] 100.00% 32s
+[Jul 24 07:45:13]  INFO Refreshed 6152 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2014'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:45:13]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2014.xml.gz
+ 1 / 1 [==========================================================================================================] 100.00% 10s
+[Jul 24 07:45:24]  INFO Fetched 8480 CVEs
+[Jul 24 07:45:24]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:45:24]  INFO Inserting CVEs...
+ 8480 / 8480 [====================================================================================================] 100.00% 28s
+[Jul 24 07:45:53]  INFO Refreshed 8480 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2015'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:45:53]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2015.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 4s
+[Jul 24 07:45:58]  INFO Fetched 7990 CVEs
+[Jul 24 07:45:58]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:45:58]  INFO Inserting CVEs...
+ 7990 / 7990 [====================================================================================================] 100.00% 22s
+[Jul 24 07:46:20]  INFO Refreshed 7990 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2016'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:46:20]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2016.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 5s
+[Jul 24 07:46:26]  INFO Fetched 9737 CVEs
+[Jul 24 07:46:26]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:46:26]  INFO Inserting CVEs...
+ 9737 / 9737 [====================================================================================================] 100.00% 23s
+[Jul 24 07:46:50]  INFO Refreshed 9737 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2017'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:46:50]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2017.xml.gz
+ 1 / 1 [==========================================================================================================] 100.00% 12s
+[Jul 24 07:47:03]  INFO Fetched 14746 CVEs
+[Jul 24 07:47:03]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:47:03]  INFO Inserting CVEs...
+ 14746 / 14746 [================================================================================================] 100.00% 1m34s
+[Jul 24 07:48:38]  INFO Refreshed 14746 Nvds.
+install-vuls.sh: go-cve-dictionary fetchnvd -years '2018'
+ 0 / 1 [--------------------------------------------------------------------------------------------------------------]   0.00%[Jul 24 07:48:38]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2018.xml.gz
+ 1 / 1 [===========================================================================================================] 100.00% 4s
+[Jul 24 07:48:43]  INFO Fetched 6954 CVEs
+[Jul 24 07:48:43]  INFO Inserting NVD into DB (sqlite3).
+[Jul 24 07:48:43]  INFO Inserting CVEs...
+ 6954 / 6954 [====================================================================================================] 100.00% 26s
+[Jul 24 07:49:09]  INFO Refreshed 6954 Nvds.
+install-vuls.sh: git clone 'goval-dictionary'
+Cloning into 'goval-dictionary'...
+fatal: No names found, cannot describe anything.
+go get -u github.com/golang/dep/...
+dep ensure
+go install -ldflags "-X 'main.version=' -X 'main.revision=652b729'"
+install-vuls.sh: goval-dictionary fetch-redhat 7
+INFO[07-24|07:49:40] Fetching...                              URL=https://www.redhat.com/security/data/oval/com.redhat.rhsa-RHEL7.xml.bz2
+INFO[07-24|07:49:41] Finished to fetch OVAL definitions 
+INFO[07-24|07:49:41] Fetched                                  URL=https://www.redhat.com/security/data/oval/com.redhat.rhsa-RHEL7.xml.bz2 OVAL definitions=663
+INFO[07-24|07:49:41] Refreshing...                            Family=redhat Version=7
+install-vuls.sh: git clone 'https://github.com/future-architect/vuls'
+Cloning into 'vuls'...
+github.com/golang/lint (download)
+Fetching https://golang.org/x/lint?go-get=1
+Parsing meta tags from https://golang.org/x/lint?go-get=1 (status code 200)
+get "golang.org/x/lint": found meta tag get.metaImport{Prefix:"golang.org/x/lint", VCS:"git", RepoRoot:"https://go.googlesource.com/lint"} at https://golang.org/x/lint?go-get=1
+golang.org/x/lint (download)
+Fetching https://golang.org/x/tools/go/ast/astutil?go-get=1
+Parsing meta tags from https://golang.org/x/tools/go/ast/astutil?go-get=1 (status code 200)
+get "golang.org/x/tools/go/ast/astutil": found meta tag get.metaImport{Prefix:"golang.org/x/tools", VCS:"git", RepoRoot:"https://go.googlesource.com/tools"} at https://golang.org/x/tools/go/ast/astutil?go-get=1
+get "golang.org/x/tools/go/ast/astutil": verifying non-authoritative meta tag
+Fetching https://golang.org/x/tools?go-get=1
+Parsing meta tags from https://golang.org/x/tools?go-get=1 (status code 200)
+golang.org/x/tools (download)
+Fetching https://golang.org/x/tools/go/gcexportdata?go-get=1
+Parsing meta tags from https://golang.org/x/tools/go/gcexportdata?go-get=1 (status code 200)
+get "golang.org/x/tools/go/gcexportdata": found meta tag get.metaImport{Prefix:"golang.org/x/tools", VCS:"git", RepoRoot:"https://go.googlesource.com/tools"} at https://golang.org/x/tools/go/gcexportdata?go-get=1
+get "golang.org/x/tools/go/gcexportdata": verifying non-authoritative meta tag
+
+install-vuls.sh: Vuls installed
+```
+
+
+=== Usage
 
 ```sh
 sudo ./scan-vuls.sh
 ```
+
+==== Example run on RHEL 7.5
 
 ```console
 [root@ip-10-149-81-173 ~]# ./scan-vuls.sh

@@ -59,12 +59,12 @@ main() {
 
 	local -r gocvedict="github.com/kotakanbe/go-cve-dictionary"
 	echo "${__progname}: go get '${gocvedict}'"
-	go get "${gocvedict}" || \
+	go get "${gocvedict}" 2>/dev/null || \
 		errx "go get '${gocvedict}' failed"
 
 	for year in {2004..2018}; do
 		echo "${__progname}: go-cve-dictionary fetchnvd -years '${year}'"
-		go-cve-dictionary fetchnvd -years "${year}" || \
+		go-cve-dictionary fetchnvd -years "${year}" 2>/dev/null || \
 			errx "go-cve-dictionary fetchnvd -year '${year}' failed"
 	done
 
@@ -78,11 +78,11 @@ main() {
 		errx "git clone '${govaldicturl}' failed"
 
 	cd "${govaldict}"
-	make install || \
+	make install 2>/dev/null || \
 		errx "make install failed"
 
 	echo "${__progname}: goval-dictionary fetch-redhat 7"
-	goval-dictionary fetch-redhat 7 || \
+	goval-dictionary fetch-redhat 7 2>/dev/null || \
 		errx "goval-dictionary fetch-redhat 7 failed"
 
 	local -r vulsurl="https://github.com/future-architect/vuls"
@@ -102,6 +102,7 @@ main() {
 
 	rm -rf "${vulspath}/src"
 
+	echo
 	echo "${__progname}: Vuls installed"
 
 	return 0
