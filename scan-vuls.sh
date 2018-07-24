@@ -5,16 +5,17 @@
 # Setup and execute the Vuls vulnerability scanner (https://vuls.io/) for RHEL/CentOS on EC2
 #
 # This script does the following:
-# 1) Create a basic Vuls configuration using the ec2-user
-# 2) Create a SSH keypair so Vuls can ssh into localhost
-# 3) Run a scan
-# 4) Convert the json report to text
-# 5) Delete the keypair and temporary files
-# 6) Display the report
+# 1) Create a basic Vuls configuration using the ec2-user and the private IP obtained
+#    from the EC2 metadata service;
+# 2) Create a SSH keypair so Vuls can ssh into localhost;
+# 3) Run a scan;
+# 4) Convert the json report to text;
+# 5) Delete the keypair and temporary files;
+# 6) Display the report.
 #
 # Dependencies:
-# 1) Installed Vuls (use: install-vuls.sh)
-# 2) Installed ssh-keygen and ssh-keyscan
+# 1) Installed Vuls (use: install-vuls.sh);
+# 2) Installed ssh-keygen and ssh-keyscan.
 
 set -uo pipefail
 
@@ -140,10 +141,12 @@ main() {
 	if [ $? -eq 0 ]; then
 		echo "${__progname}: vulnerabilities identified:"
 		cat "${report}"
+		echo
 
 		return 1
 	else
 		echo "${__progname}: no vulnerabilities identified"
+		echo
 	fi
 
 	return 0

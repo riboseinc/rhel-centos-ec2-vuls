@@ -100,7 +100,9 @@ main() {
 	make install >/dev/null || \
 		errx "make install failed"
 
-	echo "${__progname}: vuls installed"
+	rm -rf "${vulspath}/src"
+
+	echo "${__progname}: Vuls installed"
 
 	return 0
 }

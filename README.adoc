@@ -1,15 +1,98 @@
 = rhel-centos-ec2-vuls
 
+These scrips are used to install and execute the Vuls vulnerability scanner (https://vuls.io) running RHEL/CentOS on AWS EC2
+
 
 == Description
+
+Vuls is an open-source, agent-less vulnerability scanner based on information from NVD, OVAL, etc.
+
+Use these two scripts to install Vuls and run vulnerability scans on your RHEL/CentOS instance on AWS EC2.
 
 
 === Installation
 
+```sh
+sudo ./install-vuls.sh
+```
+
 
 === Execution
+
+```sh
+sudo ./scan-vuls.sh
+```
+
+```console
+[root@ip-10-149-81-173 ~]# ./scan-vuls.sh
+scan-vuls.sh: sourcing '/etc/profile.d/vulsenv.sh'
+scan-vuls.sh: creating '//usr/local/etc/vuls-config.toml'
+scan-vuls.sh: config file:
+[default]
+port = "22"
+user = "ec2-user"
+keyPath = "/home/ec2-user/.ssh/vuls_id_rsa"
+[servers]
+[servers.local]
+host = "10.149.81.173"
+scan-vuls.sh: creating SSH keypair in '/home/ec2-user/.ssh/vuls_id_rsa'
+Generating public/private rsa key pair.
+Your identification has been saved in /home/ec2-user/.ssh/vuls_id_rsa.
+Your public key has been saved in /home/ec2-user/.ssh/vuls_id_rsa.pub.
+The key fingerprint is:
+SHA256:Vf/wNbymbYpeo47d+dVe3GUIsbhVKczrwf+poVhGObc vuls
+The key's randomart image is:
++---[RSA 2048]----+
+|           oo .. |
+|           o+=o  |
+|          o.+ooo.|
+|         . o=. =+|
+|        S .= +.o=|
+|          . + *o+|
+|           o E +B|
+|          * * *o+|
+|         ooB =o..|
++----[SHA256]-----+
+scan-vuls.sh: running 'vuls configtest'
+[Jul 24 07:18:22]  INFO [localhost] Validating config...
+[Jul 24 07:18:22]  INFO [localhost] Detecting Server/Container OS...
+[Jul 24 07:18:22]  INFO [localhost] Detecting OS of servers...
+[Jul 24 07:18:22]  INFO [localhost] (1/1) Detected: local: redhat 7.5
+[Jul 24 07:18:22]  INFO [localhost] Detecting OS of containers...
+[Jul 24 07:18:22]  INFO [localhost] Checking dependencies...
+[Jul 24 07:18:22]  INFO [local] Dependencies ... Pass
+[Jul 24 07:18:22]  INFO [localhost] Checking sudo settings...
+[Jul 24 07:18:22]  INFO [local] sudo ... No need
+[Jul 24 07:18:22]  INFO [localhost] Scannable servers are below...
+local
+scan-vuls.sh: temporarily setting read permissions on '/etc/pki/rhui/*.{key,crt}'
+scan-vuls.sh: running 'vuls scan -deep -config=//usr/local/etc/vuls-config.toml'
+[Jul 24 07:18:22]  INFO [localhost] Start scanning
+[Jul 24 07:18:22]  INFO [localhost] config: //usr/local/etc/vuls-config.toml
+[Jul 24 07:18:22]  INFO [localhost] Validating config...
+[Jul 24 07:18:22]  INFO [localhost] Detecting Server/Container OS...
+[Jul 24 07:18:22]  INFO [localhost] Detecting OS of servers...
+[Jul 24 07:18:23]  INFO [localhost] (1/1) Detected: local: redhat 7.5
+[Jul 24 07:18:23]  INFO [localhost] Detecting OS of containers...
+[Jul 24 07:18:23]  INFO [localhost] Detecting Platforms...
+[Jul 24 07:18:23]  INFO [localhost] (1/1) local is running on aws
+[Jul 24 07:18:23]  INFO [localhost] Scanning vulnerabilities...
+[Jul 24 07:18:23]  INFO [localhost] Scanning vulnerable OS packages...
+[Jul 24 07:18:28]  INFO [localhost] Validating config...
+[Jul 24 07:18:28]  INFO [localhost] cve-dictionary: /usr/local/vuls/cve.sqlite3
+[Jul 24 07:18:28]  INFO [localhost] oval-dictionary: /usr/local/vuls/oval.sqlite3
+[Jul 24 07:18:28]  INFO [localhost] Loaded: /usr/local/vuls/results/2018-07-24T07:18:23Z
+[Jul 24 07:18:28]  INFO [localhost] Fill CVE detailed information with OVAL
+[Jul 24 07:18:28]  WARN [localhost] OVAL entries of redhat 7.5 are not found. It's recommended to use OVAL to improve scanning accuracy. For details, see https://github.com/kotakanbe/goval-dictionary#usage , Then report with --ovaldb-path or --ovaldb-url flag
+[Jul 24 07:18:28]  INFO [localhost] Fill CVE detailed information with CVE-DB
+scan-vuls.sh: reverting read permissions on '/etc/pki/rhui/*.{key,crt}'
+scan-vuls.sh: removing 'vuls' from '/home/ec2-user/.ssh/authorized_keys'
+scan-vuls.sh: removing '/home/ec2-user/.ssh/vuls_id_rsa' and '/home/ec2-user/.ssh/vuls_id_rsa.pub'
+scan-vuls.sh: no vulnerabilities identified
+```
 
 
 == Contributions
 
 Feel free to open an issue or to send a pull request.
+
