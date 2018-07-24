@@ -38,7 +38,7 @@ main() {
 	echo 'export GOROOT=/usr/share/gocode/go' >> "${vulsenv}"
 	echo "export VULSPATH=${vulspath}" >> "${vulsenv}"
 	echo 'export GOPATH=${VULSPATH}' >> "${vulsenv}"
-	echo 'export PATH=${PATH}:${GOROOT}:${GOROOT}/bin:${VULSPATH}:${VULSPATH}/bin:${VULSPATH}/src:${VULSPATH}/src/bin' >> "${vulsenv}"
+	echo 'export PATH=${PATH}:${GOROOT}:${GOROOT}/bin:${GO}/bin:${VULSPATH}:${VULSPATH}/bin:${VULSPATH}/src:${VULSPATH}/src/bin' >> "${vulsenv}"
 
 	echo "${__progname}: sourcing '${vulsenv}'"
 	. "${vulsenv}" || \
