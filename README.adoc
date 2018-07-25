@@ -13,7 +13,7 @@ Use these scripts to install Vuls and run vulnerability scans on your RHEL/CentO
 == Files
 
 * install-vuls.sh: the Vuls installation script, it downloads and compiles all dependencies (except: Go)
-* update-cve-oval.sh: a CVE/OVAL file update script that downloads CVE information from 2004 to `${currentyear}`
+* update-cve-oval.sh: a CVE/OVAL file update script that downloads CVE information from 2013 to `${currentyear}`
 * scan-vuls.sh: the script to perform a vulnerability scan on localhost, it sets up a basic local configuration and does not require any configuration
 * install.sh: a script to "install" `scan-vuls.sh` and `update-cve-oval.sh` to `/usr/local/bin` and run the `install-vuls.sh` script
 
@@ -55,87 +55,6 @@ go get -u github.com/golang/dep/...
 dep ensure
 go install -ldflags "-X 'main.version=' -X 'main.revision=652b729'"
 update-cve-oval.sh: sourcing '/etc/profile.d/vuls-env.sh'
-update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2004'
- 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
-[Jul 25 04:26:16]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2004.xml.gz
- 1 / 1 [===========================================================================================] 100.00% 2s
-[Jul 25 04:26:18]  INFO Fetched 2702 CVEs
-[Jul 25 04:26:18]  INFO Inserting NVD into DB (sqlite3).
-[Jul 25 04:26:18]  INFO Inserting CVEs...
- 2702 / 2702 [=====================================================================================] 100.00% 6s
-[Jul 25 04:26:25]  INFO Refreshed 2702 Nvds.
-update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2005'
- 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
-[Jul 25 04:26:25]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2005.xml.gz
- 1 / 1 [===========================================================================================] 100.00% 3s
-[Jul 25 04:26:28]  INFO Fetched 4749 CVEs
-[Jul 25 04:26:28]  INFO Inserting NVD into DB (sqlite3).
-[Jul 25 04:26:28]  INFO Inserting CVEs...
- 4749 / 4749 [=====================================================================================] 100.00% 10s
-[Jul 25 04:26:38]  INFO Refreshed 4749 Nvds.
-update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2006'
- 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
-[Jul 25 04:26:38]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2006.xml.gz
- 1 / 1 [===========================================================================================] 100.00% 4s
-[Jul 25 04:26:43]  INFO Fetched 7127 CVEs
-[Jul 25 04:26:43]  INFO Inserting NVD into DB (sqlite3).
-[Jul 25 04:26:43]  INFO Inserting CVEs...
- 7127 / 7127 [=====================================================================================] 100.00% 14s
-[Jul 25 04:26:58]  INFO Refreshed 7127 Nvds.
-update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2007'
- 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
-[Jul 25 04:26:58]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2007.xml.gz
- 1 / 1 [===========================================================================================] 100.00% 5s
-[Jul 25 04:27:03]  INFO Fetched 6556 CVEs
-[Jul 25 04:27:03]  INFO Inserting NVD into DB (sqlite3).
-[Jul 25 04:27:03]  INFO Inserting CVEs...
- 6556 / 6556 [=====================================================================================] 100.00% 13s
-[Jul 25 04:27:16]  INFO Refreshed 6556 Nvds.
-update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2008'
- 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
-[Jul 25 04:27:16]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2008.xml.gz
- 1 / 1 [===========================================================================================] 100.00% 4s
-[Jul 25 04:27:21]  INFO Fetched 7146 CVEs
-[Jul 25 04:27:21]  INFO Inserting NVD into DB (sqlite3).
-[Jul 25 04:27:21]  INFO Inserting CVEs...
- 7146 / 7146 [=====================================================================================] 100.00% 17s
-[Jul 25 04:27:39]  INFO Refreshed 7146 Nvds.
-update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2009'
- 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
-[Jul 25 04:27:39]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2009.xml.gz
- 1 / 1 [===========================================================================================] 100.00% 9s
-[Jul 25 04:27:48]  INFO Fetched 4962 CVEs
-[Jul 25 04:27:48]  INFO Inserting NVD into DB (sqlite3).
-[Jul 25 04:27:48]  INFO Inserting CVEs...
- 4962 / 4962 [=====================================================================================] 100.00% 21s
-[Jul 25 04:28:10]  INFO Refreshed 4962 Nvds.
-update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2010'
- 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
-[Jul 25 04:28:10]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2010.xml.gz
- 1 / 1 [===========================================================================================] 100.00% 5s
-[Jul 25 04:28:15]  INFO Fetched 5073 CVEs
-[Jul 25 04:28:15]  INFO Inserting NVD into DB (sqlite3).
-[Jul 25 04:28:15]  INFO Inserting CVEs...
- 5073 / 5073 [=====================================================================================] 100.00% 33s
-[Jul 25 04:28:49]  INFO Refreshed 5073 Nvds.
-update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2011'
- 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
-[Jul 25 04:28:49]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2011.xml.gz
- 1 / 1 [===========================================================================================] 100.00% 13s
-[Jul 25 04:29:03]  INFO Fetched 4618 CVEs
-[Jul 25 04:29:03]  INFO Inserting NVD into DB (sqlite3).
-[Jul 25 04:29:03]  INFO Inserting CVEs...
- 4618 / 4618 [=====================================================================================] 100.00% 1m44s
-[Jul 25 04:30:49]  INFO Refreshed 4618 Nvds.
-update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2012'
- 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
-[Jul 25 04:30:49]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2012.xml.gz
- 1 / 1 [===========================================================================================] 100.00% 6s
-[Jul 25 04:30:55]  INFO Fetched 5548 CVEs
-[Jul 25 04:30:55]  INFO Inserting NVD into DB (sqlite3).
-[Jul 25 04:30:55]  INFO Inserting CVEs...
- 5548 / 5548 [=====================================================================================] 100.00% 33s
-[Jul 25 04:31:29]  INFO Refreshed 5548 Nvds.
 update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2013'
  0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
 [Jul 25 04:31:29]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2013.xml.gz
