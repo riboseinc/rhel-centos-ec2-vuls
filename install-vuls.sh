@@ -62,12 +62,6 @@ main() {
 	go get "${gocvedict}" 2>/dev/null || \
 		errx "go get '${gocvedict}' failed"
 
-	for year in {2004..2018}; do
-		echo "${__progname}: go-cve-dictionary fetchnvd -years '${year}'"
-		go-cve-dictionary fetchnvd -years "${year}" 2>/dev/null || \
-			errx "go-cve-dictionary fetchnvd -year '${year}' failed"
-	done
-
 	local -r govaldict="goval-dictionary"
 	local -r govaldicturl="https://github.com/kotakanbe/${govaldict}"
 	echo "${__progname}: git clone '${govaldict}'"
@@ -81,9 +75,9 @@ main() {
 	make install 2>/dev/null || \
 		errx "make install failed"
 
-	echo "${__progname}: goval-dictionary fetch-redhat 7"
-	goval-dictionary fetch-redhat 7 2>/dev/null || \
-		errx "goval-dictionary fetch-redhat 7 failed"
+	local -r updatecveoval="/usr/local/bin/update-cve-oval.sh"
+	"${updatecveoval}" || \
+		errx "'${updatecveoval}' failed"
 
 	local -r vulsurl="https://github.com/future-architect/vuls"
 	cd "${vulspath}/src"
