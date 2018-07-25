@@ -7,43 +7,193 @@ Install and execute the Vuls vulnerability scanner (https://vuls.io) for RHEL/Ce
 
 Vuls is an open-source, agent-less vulnerability scanner based on information from NVD, OVAL, etc.
 
-Use these two scripts to install Vuls and run vulnerability scans on your RHEL/CentOS instance on AWS EC2.
+Use these scripts to install Vuls and run vulnerability scans on your RHEL/CentOS instance on AWS EC2.
+
+
+=== Files
+
+* install-vuls.sh: the Vuls installation script
+* update-cve-oval.sh: a CVE/OVAL file update script
+* scan-vuls.sh: the script to perform a vulnerability scan on localhost
+* install.sh: a script to copy files to `/usr/local/bin` and run the `install-vuls.sh` script
+
+
+=== Dependencies
+
+Vuls relies on Go (https://golang.org/dl/). After you install Go please make sure the `go` binary is in the `PATH` of your own shell and `sudo`.
 
 
 === Installation
 
 ```sh
-sudo ./install-vuls.sh
+git clone https://github.com/riboseinc/rhel-centos-ec2-vuls
+cd rhel-centos-ec2-vuls
+sudo ./install.sh
 ```
 
-==== Example installation on RHEL 7.5
+==== Example full installation on RHEL 7.5
 
 ```console
-$ sudo ./install-vuls.sh
+$ git clone https://github.com/riboseinc/rhel-centos-ec2-vuls
+Cloning into 'rhel-centos-ec2-vuls'...
+remote: Counting objects: 35, done.
+remote: Compressing objects: 100% (26/26), done.
+remote: Total 35 (delta 17), reused 27 (delta 9), pack-reused 0
+Unpacking objects: 100% (35/35), done.
+$ cd rhel-centos-ec2-vuls
+$ sudo ./install.sh
+copying 'scan-vuls.sh' to '/usr/local/bin'
+copying 'update-cve-oval.sh' to '/usr/local/bin'
 install-vuls.sh: creating '/etc/profile.d/vuls-env.sh'
 install-vuls.sh: sourcing '/etc/profile.d/vuls-env.sh'
+install-vuls.sh: creating '/usr/local/vuls'
 install-vuls.sh: go get 'github.com/kotakanbe/go-cve-dictionary'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2004'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2005'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2006'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2007'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2008'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2009'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2010'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2011'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2012'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2013'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2014'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2015'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2016'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2017'
-install-vuls.sh: go-cve-dictionary fetchnvd -years '2018'
 install-vuls.sh: git clone 'goval-dictionary'
 Cloning into 'goval-dictionary'...
 go get -u github.com/golang/dep/...
 dep ensure
 go install -ldflags "-X 'main.version=' -X 'main.revision=652b729'"
-install-vuls.sh: goval-dictionary fetch-redhat 7
+update-cve-oval.sh: sourcing '/etc/profile.d/vuls-env.sh'
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2004'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:26:16]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2004.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 2s
+[Jul 25 04:26:18]  INFO Fetched 2702 CVEs
+[Jul 25 04:26:18]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:26:18]  INFO Inserting CVEs...
+ 2702 / 2702 [=====================================================================================] 100.00% 6s
+[Jul 25 04:26:25]  INFO Refreshed 2702 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2005'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:26:25]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2005.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 3s
+[Jul 25 04:26:28]  INFO Fetched 4749 CVEs
+[Jul 25 04:26:28]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:26:28]  INFO Inserting CVEs...
+ 4749 / 4749 [=====================================================================================] 100.00% 10s
+[Jul 25 04:26:38]  INFO Refreshed 4749 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2006'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:26:38]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2006.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 4s
+[Jul 25 04:26:43]  INFO Fetched 7127 CVEs
+[Jul 25 04:26:43]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:26:43]  INFO Inserting CVEs...
+ 7127 / 7127 [=====================================================================================] 100.00% 14s
+[Jul 25 04:26:58]  INFO Refreshed 7127 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2007'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:26:58]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2007.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 5s
+[Jul 25 04:27:03]  INFO Fetched 6556 CVEs
+[Jul 25 04:27:03]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:27:03]  INFO Inserting CVEs...
+ 6556 / 6556 [=====================================================================================] 100.00% 13s
+[Jul 25 04:27:16]  INFO Refreshed 6556 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2008'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:27:16]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2008.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 4s
+[Jul 25 04:27:21]  INFO Fetched 7146 CVEs
+[Jul 25 04:27:21]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:27:21]  INFO Inserting CVEs...
+ 7146 / 7146 [=====================================================================================] 100.00% 17s
+[Jul 25 04:27:39]  INFO Refreshed 7146 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2009'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:27:39]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2009.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 9s
+[Jul 25 04:27:48]  INFO Fetched 4962 CVEs
+[Jul 25 04:27:48]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:27:48]  INFO Inserting CVEs...
+ 4962 / 4962 [=====================================================================================] 100.00% 21s
+[Jul 25 04:28:10]  INFO Refreshed 4962 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2010'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:28:10]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2010.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 5s
+[Jul 25 04:28:15]  INFO Fetched 5073 CVEs
+[Jul 25 04:28:15]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:28:15]  INFO Inserting CVEs...
+ 5073 / 5073 [=====================================================================================] 100.00% 33s
+[Jul 25 04:28:49]  INFO Refreshed 5073 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2011'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:28:49]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2011.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 13s
+[Jul 25 04:29:03]  INFO Fetched 4618 CVEs
+[Jul 25 04:29:03]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:29:03]  INFO Inserting CVEs...
+ 4618 / 4618 [=====================================================================================] 100.00% 1m44s
+[Jul 25 04:30:49]  INFO Refreshed 4618 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2012'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:30:49]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2012.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 6s
+[Jul 25 04:30:55]  INFO Fetched 5548 CVEs
+[Jul 25 04:30:55]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:30:55]  INFO Inserting CVEs...
+ 5548 / 5548 [=====================================================================================] 100.00% 33s
+[Jul 25 04:31:29]  INFO Refreshed 5548 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2013'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:31:29]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2013.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 6s
+[Jul 25 04:31:35]  INFO Fetched 6152 CVEs
+[Jul 25 04:31:35]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:31:35]  INFO Inserting CVEs...
+ 6152 / 6152 [=====================================================================================] 100.00% 32s
+[Jul 25 04:32:08]  INFO Refreshed 6152 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2014'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:32:08]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2014.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 5s
+[Jul 25 04:32:14]  INFO Fetched 8480 CVEs
+[Jul 25 04:32:14]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:32:14]  INFO Inserting CVEs...
+ 8480 / 8480 [=====================================================================================] 100.00% 29s
+[Jul 25 04:32:44]  INFO Refreshed 8480 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2015'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:32:44]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2015.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 4s
+[Jul 25 04:32:49]  INFO Fetched 7990 CVEs
+[Jul 25 04:32:49]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:32:49]  INFO Inserting CVEs...
+ 7990 / 7990 [=====================================================================================] 100.00% 22s
+[Jul 25 04:33:12]  INFO Refreshed 7990 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2016'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:33:12]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2016.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 5s
+[Jul 25 04:33:17]  INFO Fetched 9737 CVEs
+[Jul 25 04:33:17]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:33:17]  INFO Inserting CVEs...
+ 9737 / 9737 [=====================================================================================] 100.00% 24s
+[Jul 25 04:33:42]  INFO Refreshed 9737 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2017'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:33:42]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2017.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 12s
+[Jul 25 04:33:54]  INFO Fetched 14746 CVEs
+[Jul 25 04:33:54]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:33:54]  INFO Inserting CVEs...
+ 14746 / 14746 [===================================================================================] 100.00% 1m42s
+[Jul 25 04:35:38]  INFO Refreshed 14746 Nvds.
+update-cve-oval.sh: go-cve-dictionary fetchnvd -years '2018'
+ 0 / 1 [-------------------------------------------------------------------------------------------]   0.00%
+[Jul 25 04:35:38]  INFO Fetching... https://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-2018.xml.gz
+ 1 / 1 [===========================================================================================] 100.00% 4s
+[Jul 25 04:35:42]  INFO Fetched 6954 CVEs
+[Jul 25 04:35:42]  INFO Inserting NVD into DB (sqlite3).
+[Jul 25 04:35:42]  INFO Inserting CVEs...
+ 6954 / 6954 [=====================================================================================] 100.00% 26s
+[Jul 25 04:36:10]  INFO Refreshed 6954 Nvds.
+update-cve-oval.sh: goval-dictionary fetch-redhat 7
+INFO[07-25|04:36:10] Fetching...                              URL=https://www.redhat.com/security/data/oval/com.redhat.rhsa-RHEL7.xml.bz2
+INFO[07-25|04:36:10] Finished to fetch OVAL definitions 
+INFO[07-25|04:36:11] Fetched                                  URL=https://www.redhat.com/security/data/oval/com.redhat.rhsa-RHEL7.xml.bz2 OVAL definitions=666
+INFO[07-25|04:36:11] Refreshing...                            Family=redhat Version=7
 install-vuls.sh: git clone 'https://github.com/future-architect/vuls'
 Cloning into 'vuls'...
 github.com/golang/lint (download)
@@ -67,13 +217,13 @@ install-vuls.sh: Vuls installed
 ```
 
 
-=== Usage
+=== Scan
 
 ```sh
 sudo ./scan-vuls.sh
 ```
 
-==== Example run on RHEL 7.5
+==== Example scan on RHEL 7.5
 
 ```console
 $ sudo ./scan-vuls.sh 
@@ -85,38 +235,437 @@ scan-vuls.sh: config file:
 host = "localhost"
 port = "local"
 scan-vuls.sh: running 'vuls configtest'
-[Jul 24 09:27:18]  INFO [localhost] Validating config...
-[Jul 24 09:27:18]  INFO [localhost] Detecting Server/Container OS... 
-[Jul 24 09:27:18]  INFO [localhost] Detecting OS of servers... 
-[Jul 24 09:27:18]  INFO [localhost] (1/1) Detected: localhost: redhat 7.5
-[Jul 24 09:27:18]  INFO [localhost] Detecting OS of containers... 
-[Jul 24 09:27:18]  INFO [localhost] Checking dependencies...
-[Jul 24 09:27:18]  INFO [localhost] Dependencies ... Pass
-[Jul 24 09:27:18]  INFO [localhost] Checking sudo settings...
-[Jul 24 09:27:18]  INFO [localhost] sudo ... No need
-[Jul 24 09:27:18]  INFO [localhost] Scannable servers are below...
+[Jul 25 04:51:32]  INFO [localhost] Validating config...
+[Jul 25 04:51:32]  INFO [localhost] Detecting Server/Container OS... 
+[Jul 25 04:51:32]  INFO [localhost] Detecting OS of servers... 
+[Jul 25 04:51:32]  INFO [localhost] (1/1) Detected: localhost: redhat 7.5
+[Jul 25 04:51:32]  INFO [localhost] Detecting OS of containers... 
+[Jul 25 04:51:32]  INFO [localhost] Checking dependencies...
+[Jul 25 04:51:32]  INFO [localhost] Dependencies ... Pass
+[Jul 25 04:51:32]  INFO [localhost] Checking sudo settings...
+[Jul 25 04:51:32]  INFO [localhost] sudo ... No need
+[Jul 25 04:51:32]  INFO [localhost] Scannable servers are below...
 localhost 
 scan-vuls.sh: running 'vuls scan'
-[Jul 24 09:27:18]  INFO [localhost] Start scanning
-[Jul 24 09:27:18]  INFO [localhost] config: //usr/local/etc/vuls-config.toml
-[Jul 24 09:27:18]  INFO [localhost] Validating config...
-[Jul 24 09:27:18]  INFO [localhost] Detecting Server/Container OS... 
-[Jul 24 09:27:18]  INFO [localhost] Detecting OS of servers... 
-[Jul 24 09:27:18]  INFO [localhost] (1/1) Detected: localhost: redhat 7.5
-[Jul 24 09:27:18]  INFO [localhost] Detecting OS of containers... 
-[Jul 24 09:27:18]  INFO [localhost] Detecting Platforms... 
-[Jul 24 09:27:18]  INFO [localhost] (1/1) localhost is running on aws
-[Jul 24 09:27:18]  INFO [localhost] Scanning vulnerabilities... 
-[Jul 24 09:27:18]  INFO [localhost] Scanning vulnerable OS packages...
+[Jul 25 04:51:32]  INFO [localhost] Start scanning
+[Jul 25 04:51:32]  INFO [localhost] config: //usr/local/etc/vuls-config.toml
+[Jul 25 04:51:32]  INFO [localhost] Validating config...
+[Jul 25 04:51:32]  INFO [localhost] Detecting Server/Container OS... 
+[Jul 25 04:51:32]  INFO [localhost] Detecting OS of servers... 
+[Jul 25 04:51:32]  INFO [localhost] (1/1) Detected: localhost: redhat 7.5
+[Jul 25 04:51:32]  INFO [localhost] Detecting OS of containers... 
+[Jul 25 04:51:32]  INFO [localhost] Detecting Platforms... 
+[Jul 25 04:51:32]  INFO [localhost] (1/1) localhost is running on aws
+[Jul 25 04:51:32]  INFO [localhost] Scanning vulnerabilities... 
+[Jul 25 04:51:32]  INFO [localhost] Scanning vulnerable OS packages...
+[Jul 25 04:51:35]  INFO [localhost] (1/44) Fetched Changelogs NetworkManager-team
+[Jul 25 04:51:36]  INFO [localhost] (2/44) Fetched Changelogs selinux-policy
+[Jul 25 04:51:36]  INFO [localhost] (3/44) Fetched Changelogs nss-sysinit
+[Jul 25 04:51:37]  INFO [localhost] (4/44) Fetched Changelogs openldap
+[Jul 25 04:51:37]  INFO [localhost] (5/44) Fetched Changelogs NetworkManager-tui
+[Jul 25 04:51:37]  INFO [localhost] (6/44) Fetched Changelogs iwl7265-firmware
+[Jul 25 04:51:38]  INFO [localhost] (7/44) Fetched Changelogs python-perf
+[Jul 25 04:51:38]  INFO [localhost] (8/44) Fetched Changelogs dhcp-libs
+[Jul 25 04:51:39]  INFO [localhost] (9/44) Fetched Changelogs microcode_ctl
+[Jul 25 04:51:39]  INFO [localhost] (10/44) Fetched Changelogs procps-ng
+[Jul 25 04:51:39]  INFO [localhost] (11/44) Fetched Changelogs tzdata
+[Jul 25 04:51:40]  INFO [localhost] (12/44) Fetched Changelogs kernel-tools-libs
+[Jul 25 04:51:40]  INFO [localhost] (13/44) Fetched Changelogs sudo
+[Jul 25 04:51:40]  INFO [localhost] (14/44) Fetched Changelogs libss
+[Jul 25 04:51:41]  INFO [localhost] (15/44) Fetched Changelogs nss-softokn
+[Jul 25 04:51:41]  INFO [localhost] (16/44) Fetched Changelogs NetworkManager-config-server
+[Jul 25 04:51:42]  INFO [localhost] (17/44) Fetched Changelogs subscription-manager
+[Jul 25 04:51:42]  INFO [localhost] (18/44) Fetched Changelogs rsyslog
+[Jul 25 04:51:42]  INFO [localhost] (19/44) Fetched Changelogs nss-softokn-freebl
+[Jul 25 04:51:43]  INFO [localhost] (20/44) Fetched Changelogs e2fsprogs-libs
+[Jul 25 04:51:43]  INFO [localhost] (21/44) Fetched Changelogs gnupg2
+[Jul 25 04:51:44]  INFO [localhost] (22/44) Fetched Changelogs selinux-policy-targeted
+[Jul 25 04:51:44]  INFO [localhost] (23/44) Fetched Changelogs kernel
+[Jul 25 04:51:44]  INFO [localhost] (24/44) Fetched Changelogs krb5-libs
+[Jul 25 04:51:45]  INFO [localhost] (25/44) Fetched Changelogs nss-tools
+[Jul 25 04:51:45]  INFO [localhost] (26/44) Fetched Changelogs dhcp-common
+[Jul 25 04:51:46]  INFO [localhost] (27/44) Fetched Changelogs cloud-init
+[Jul 25 04:51:46]  INFO [localhost] (28/44) Fetched Changelogs nspr
+[Jul 25 04:51:46]  INFO [localhost] (29/44) Fetched Changelogs subscription-manager-rhsm
+[Jul 25 04:51:47]  INFO [localhost] (30/44) Fetched Changelogs python
+[Jul 25 04:51:47]  INFO [localhost] (31/44) Fetched Changelogs dhclient
+[Jul 25 04:51:48]  INFO [localhost] (32/44) Fetched Changelogs python-libs
+[Jul 25 04:51:48]  INFO [localhost] (33/44) Fetched Changelogs e2fsprogs
+[Jul 25 04:51:48]  INFO [localhost] (34/44) Fetched Changelogs iptables
+[Jul 25 04:51:49]  INFO [localhost] (35/44) Fetched Changelogs subscription-manager-rhsm-certificates
+[Jul 25 04:51:49]  INFO [localhost] (36/44) Fetched Changelogs binutils
+[Jul 25 04:51:49]  INFO [localhost] (37/44) Fetched Changelogs NetworkManager
+[Jul 25 04:51:50]  INFO [localhost] (38/44) Fetched Changelogs libcom_err
+[Jul 25 04:51:50]  INFO [localhost] (39/44) Fetched Changelogs nss
+[Jul 25 04:51:51]  INFO [localhost] (40/44) Fetched Changelogs nss-util
+[Jul 25 04:51:51]  INFO [localhost] (41/44) Fetched Changelogs NetworkManager-libnm
+[Jul 25 04:51:51]  INFO [localhost] (42/44) Fetched Changelogs kernel-tools
+[Jul 25 04:51:52]  INFO [localhost] (43/44) Fetched Changelogs ca-certificates
+[Jul 25 04:51:52]  INFO [localhost] (44/44) Fetched Changelogs libstdc++
 scan-vuls.sh: running 'vuls report'
-[Jul 24 09:27:23]  INFO [localhost] Validating config...
-[Jul 24 09:27:23]  INFO [localhost] cve-dictionary: /usr/local/vuls/cve.sqlite3
-[Jul 24 09:27:23]  INFO [localhost] oval-dictionary: /usr/local/vuls/oval.sqlite3
-[Jul 24 09:27:23]  INFO [localhost] Loaded: /usr/local/vuls/results/2018-07-24T09:27:18Z
-[Jul 24 09:27:23]  INFO [localhost] Fill CVE detailed information with OVAL
-[Jul 24 09:27:23]  WARN [localhost] OVAL entries of redhat 7.5 are not found. It's recommended to use OVAL to improve scanning accuracy. For details, see https://github.com/kotakanbe/goval-dictionary#usage , Then report with --ovaldb-path or --ovaldb-url flag
-[Jul 24 09:27:23]  INFO [localhost] Fill CVE detailed information with CVE-DB
-scan-vuls.sh: no vulnerabilities identified
+[Jul 25 04:51:56]  INFO [localhost] Validating config...
+[Jul 25 04:51:56]  INFO [localhost] cve-dictionary: /usr/local/vuls/cve.sqlite3
+[Jul 25 04:51:56]  INFO [localhost] oval-dictionary: /usr/local/vuls/oval.sqlite3
+[Jul 25 04:51:56]  INFO [localhost] Loaded: /usr/local/vuls/results/2018-07-25T04:51:32Z
+[Jul 25 04:51:56]  INFO [localhost] Fill CVE detailed information with OVAL
+[Jul 25 04:51:56]  INFO [localhost] OVAL is fresh: redhat 7.5 
+[Jul 25 04:51:57]  INFO [localhost] Fill CVE detailed information with CVE-DB
+scan-vuls.sh: vulnerabilities identified:
+localhost (redhat7.5)
+=====================
+Total: 14 (High:6 Medium:8 Low:0 ?:0)	364 installed, 44 updatable
+
+CVE-2017-16939  
+----------------
+Max Score       	8.1 IMPORTANT (redhat)                                                          
+nvd             	7.2/AV:L/AC:L/Au:N/C:C/I:C/A:C                                                  
+redhat          	6.2/AV:L/AC:H/Au:N/C:C/I:C/A:C                                                  
+Advisory        	8.9/-                                                                           
+redhat          	8.1/CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2017-16939        
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2017-16939        
+Summary         	The XFRM dump policy implementation in net/xfrm/xfrm_user.c in the Linux kernel 
+                	before 4.13.11 allows local users to gain privileges or cause a denial of       
+                	service (use-after-free) via a crafted SO_RCVBUF setsockopt system call in      
+                	conjunction with XFRM_MSG_GETPOLICY Netlink messages.                           
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2017-16939                                 
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2017-16939                           
+RHSA-2018:1318  	https://rhn.redhat.com/errata/RHSA-2018-1318.html                               
+CWE-416 (redhat)	https://cwe.mitre.org/data/definitions/416.html                                 
+CWE-264 (nvd)   	https://cwe.mitre.org/data/definitions/264.html                                 
+Package/CPE     	kernel-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                     
+                	kernel-tools-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                               
+                	kernel-tools-libs-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                          
+                	python-perf-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-1068   
+----------------
+Max Score       	8.1 IMPORTANT (redhat)                                                          
+nvd             	7.2/AV:L/AC:L/Au:N/C:C/I:C/A:C                                                  
+Advisory        	8.9/-                                                                           
+redhat          	8.1/CVSS:3.0/AV:L/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:H                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-1068         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-1068         
+Summary         	A flaw was found in the Linux 4.x kernel's implementation of 32-bit syscall     
+                	interface for bridging. This allowed a privileged user to arbitrarily write to a
+                	limited range of kernel memory.                                                 
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-1068                                  
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-1068                            
+RHSA-2018:1318  	https://rhn.redhat.com/errata/RHSA-2018-1318.html                               
+CWE-119 (redhat)	https://cwe.mitre.org/data/definitions/119.html                                 
+CWE-787 (nvd)   	https://cwe.mitre.org/data/definitions/787.html                                 
+Package/CPE     	kernel-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                     
+                	kernel-tools-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                               
+                	kernel-tools-libs-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                          
+                	python-perf-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-1087   
+----------------
+Max Score       	8.0 IMPORTANT (redhat)                                                          
+nvd             	4.6/AV:L/AC:L/Au:N/C:P/I:P/A:P                                                  
+Advisory        	8.9/-                                                                           
+redhat          	8.0/CVSS:3.0/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-1087         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-1087         
+Summary         	kernel KVM before versions kernel 4.16, kernel 4.16-rc7, kernel 4.17-rc1, kernel
+                	4.17-rc2 and kernel 4.17-rc3 is vulnerable to a flaw in the way the Linux       
+                	kernel's KVM hypervisor handled exceptions delivered after a stack switch       
+                	operation via Mov SS or Pop SS instructions. During the stack switch operation, 
+                	the processor did not deliver interrupts and exceptions, rather they are        
+                	delivered once the first instruction after the stack switch is executed. An     
+                	unprivileged KVM guest user could use this flaw to crash the guest or,          
+                	potentially, escalate their privileges in the guest.                            
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-1087                                  
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-1087                            
+RHSA-2018:1318  	https://rhn.redhat.com/errata/RHSA-2018-1318.html                               
+CWE-250 (redhat)	https://cwe.mitre.org/data/definitions/250.html                                 
+CWE-264 (nvd)   	https://cwe.mitre.org/data/definitions/264.html                                 
+Package/CPE     	kernel-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                     
+                	kernel-tools-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                               
+                	kernel-tools-libs-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                          
+                	python-perf-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-1111   
+----------------
+Max Score       	7.9 HIGH (nvd)                                                                  
+nvd             	7.9/AV:A/AC:M/Au:N/C:C/I:C/A:C                                                  
+Advisory        	10.0/-                                                                          
+redhat          	7.5/CVSS:3.0/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-1111         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-1111         
+Summary         	DHCP packages in Red Hat Enterprise Linux 6 and 7, Fedora 28, and earlier are   
+                	vulnerable to a command injection flaw in the NetworkManager integration script 
+                	included in the DHCP client. A malicious DHCP server, or an attacker on the     
+                	local network able to spoof DHCP responses, could use this flaw to execute      
+                	arbitrary commands with root privileges on systems using NetworkManager and     
+                	configured to obtain network configuration using the DHCP protocol.             
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-1111                                  
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-1111                            
+RHSA-2018:1453  	https://rhn.redhat.com/errata/RHSA-2018-1453.html                               
+CWE-77 (redhat) 	https://cwe.mitre.org/data/definitions/77.html                                  
+CWE-77 (nvd)    	https://cwe.mitre.org/data/definitions/77.html                                  
+Package/CPE     	dhclient-12:4.2.5-68.el7 -> 12:4.2.5-68.el7_5.1                                 
+                	dhcp-common-12:4.2.5-68.el7 -> 12:4.2.5-68.el7_5.1                              
+                	dhcp-libs-12:4.2.5-68.el7 -> 12:4.2.5-68.el7_5.1                                
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-1000199
+----------------
+Max Score       	7.8 IMPORTANT (redhat)                                                          
+nvd             	4.9/AV:L/AC:L/Au:N/C:N/I:N/A:C                                                  
+Advisory        	8.9/-                                                                           
+redhat          	7.8/CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-1000199      
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-1000199      
+Summary         	The Linux Kernel version 3.18 contains a dangerous feature vulnerability in     
+                	modify_user_hw_breakpoint() that can result in crash and possibly memory        
+                	corruption. This attack appear to be exploitable via local code execution and   
+                	the ability to use ptrace. This vulnerability appears to have been fixed in git 
+                	commit f67b15037a7a50c57f72e69a6d59941ad90a0f0f.                                
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-1000199                               
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-1000199                         
+RHSA-2018:1318  	https://rhn.redhat.com/errata/RHSA-2018-1318.html                               
+CWE-460 (redhat)	https://cwe.mitre.org/data/definitions/460.html                                 
+CWE-388 (nvd)   	https://cwe.mitre.org/data/definitions/388.html                                 
+Package/CPE     	kernel-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                     
+                	kernel-tools-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                               
+                	kernel-tools-libs-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                          
+                	python-perf-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-1126   
+----------------
+Max Score       	7.5 HIGH (nvd)                                                                  
+nvd             	7.5/AV:N/AC:L/Au:N/C:P/I:P/A:P                                                  
+Advisory        	8.9/-                                                                           
+redhat          	4.8/CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:L                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-1126         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-1126         
+Summary         	procps-ng before version 3.3.15 is vulnerable to an incorrect integer size in   
+                	proc/alloc.* leading to truncation/integer overflow issues. This flaw is related
+                	to CVE-2018-1124.                                                               
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-1126                                  
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-1126                            
+RHSA-2018:1700  	https://rhn.redhat.com/errata/RHSA-2018-1700.html                               
+CWE-190 (redhat)	https://cwe.mitre.org/data/definitions/190.html                                 
+CWE-190 (nvd)   	https://cwe.mitre.org/data/definitions/190.html                                 
+Package/CPE     	procps-ng-3.3.10-17.el7 -> 3.3.10-17.el7_5.2                                    
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-12020  
+----------------
+Max Score       	7.5 IMPORTANT (redhat)                                                          
+Advisory        	8.9/-                                                                           
+redhat          	7.5/CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-12020        
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-12020        
+Summary         	mainproc.c in GnuPG before 2.2.8 mishandles the original filename during        
+                	decryption and verification actions, which allows remote attackers to spoof the 
+                	output that GnuPG sends on file descriptor 2 to other programs that use the     
+                	"--status-fd 2" option. For example, the OpenPGP data might represent an        
+                	original filename that contains line feed characters in conjunction with GOODSIG
+                	or VALIDSIG status codes.                                                       
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-12020                                 
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-12020                           
+RHSA-2018:2181  	https://rhn.redhat.com/errata/RHSA-2018-2181.html                               
+CWE-20 (redhat) 	https://cwe.mitre.org/data/definitions/20.html                                  
+Package/CPE     	gnupg2-2.0.22-4.el7 -> 2.0.22-5.el7_5                                           
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-1124   
+----------------
+Max Score       	7.3 IMPORTANT (redhat)                                                          
+nvd             	4.6/AV:L/AC:L/Au:N/C:P/I:P/A:P                                                  
+Advisory        	8.9/-                                                                           
+redhat          	7.3/CVSS:3.0/AV:L/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-1124         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-1124         
+Summary         	procps-ng before version 3.3.15 is vulnerable to multiple integer overflows     
+                	leading to a heap corruption in file2strvec function. This allows a privilege   
+                	escalation for a local attacker who can create entries in procfs by starting    
+                	processes, which could result in crashes or arbitrary code execution in proc    
+                	utilities run by other users.                                                   
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-1124                                  
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-1124                            
+RHSA-2018:1700  	https://rhn.redhat.com/errata/RHSA-2018-1700.html                               
+CWE-190 (redhat)	https://cwe.mitre.org/data/definitions/190.html                                 
+CWE-122 (redhat)	https://cwe.mitre.org/data/definitions/122.html                                 
+CWE-190 (nvd)   	https://cwe.mitre.org/data/definitions/190.html                                 
+Package/CPE     	procps-ng-3.3.10-17.el7 -> 3.3.10-17.el7_5.2                                    
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-8897   
+----------------
+Max Score       	7.2 HIGH (nvd)                                                                  
+nvd             	7.2/AV:L/AC:L/Au:N/C:C/I:C/A:C                                                  
+Advisory        	8.9/-                                                                           
+redhat          	6.5/CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-8897         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-8897         
+Summary         	A statement in the System Programming Guide of the Intel 64 and IA-32           
+                	Architectures Software Developer's Manual (SDM) was mishandled in the           
+                	development of some or all operating-system kernels, resulting in unexpected    
+                	behavior for #DB exceptions that are deferred by MOV SS or POP SS, as           
+                	demonstrated by (for example) privilege escalation in Windows, macOS, some Xen  
+                	configurations, or FreeBSD, or a Linux kernel crash. The MOV to SS and POP SS   
+                	instructions inhibit interrupts (including NMIs), data breakpoints, and single  
+                	step trap exceptions until the instruction boundary following the next          
+                	instruction (SDM Vol. 3A; section 6.8.3). (The inhibited data breakpoints are   
+                	those on memory accessed by the MOV to SS or POP to SS instruction itself.) Note
+                	that debug exceptions are not inhibited by the interrupt enable (EFLAGS.IF)     
+                	system flag (SDM Vol. 3A; section 2.3). If the instruction following the MOV to 
+                	SS or POP to SS instruction is an instruction like SYSCALL, SYSENTER, INT 3,    
+                	etc. that transfers control to the operating system at CPL < 3, the debug       
+                	exception is delivered after the transfer to CPL < 3 is complete. OS kernels may
+                	not expect this order of events and may therefore experience unexpected behavior
+                	when it occurs.                                                                 
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-8897                                  
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-8897                            
+RHSA-2018:1318  	https://rhn.redhat.com/errata/RHSA-2018-1318.html                               
+CWE-250 (redhat)	https://cwe.mitre.org/data/definitions/250.html                                 
+CWE-264 (nvd)   	https://cwe.mitre.org/data/definitions/264.html                                 
+Package/CPE     	kernel-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                     
+                	kernel-tools-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                               
+                	kernel-tools-libs-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                          
+                	python-perf-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2017-11600  
+----------------
+Max Score       	6.9 MEDIUM (nvd)                                                                
+nvd             	6.9/AV:L/AC:M/Au:N/C:C/I:C/A:C                                                  
+Advisory        	8.9/-                                                                           
+redhat          	5.5/CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2017-11600        
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2017-11600        
+Summary         	net/xfrm/xfrm_policy.c in the Linux kernel through 4.12.3, when                 
+                	CONFIG_XFRM_MIGRATE is enabled, does not ensure that the dir value of           
+                	xfrm_userpolicy_id is XFRM_POLICY_MAX or less, which allows local users to cause
+                	a denial of service (out-of-bounds access) or possibly have unspecified other   
+                	impact via an XFRM_MSG_MIGRATE xfrm Netlink message.                            
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2017-11600                                 
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2017-11600                           
+RHSA-2018:1965  	https://rhn.redhat.com/errata/RHSA-2018-1965.html                               
+CWE-125 (redhat)	https://cwe.mitre.org/data/definitions/125.html                                 
+CWE-125 (nvd)   	https://cwe.mitre.org/data/definitions/125.html                                 
+Package/CPE     	kernel-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                     
+                	kernel-tools-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                               
+                	kernel-tools-libs-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                          
+                	python-perf-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-3639   
+----------------
+Max Score       	5.6 IMPORTANT (redhat)                                                          
+nvd             	4.9/AV:L/AC:L/Au:N/C:C/I:N/A:N                                                  
+Advisory        	8.9/-                                                                           
+Advisory        	8.9/-                                                                           
+redhat          	5.6/CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-3639         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-3639         
+Summary         	Systems with microprocessors utilizing speculative execution and speculative    
+                	execution of memory reads before the addresses of all prior memory writes are   
+                	known may allow unauthorized disclosure of information to an attacker with local
+                	user access via a side-channel analysis, aka Speculative Store Bypass (SSB),    
+                	Variant 4.                                                                      
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-3639                                  
+RHSA-2018:1629  	https://rhn.redhat.com/errata/RHSA-2018-1629.html                               
+RHSA-2018:1965  	https://rhn.redhat.com/errata/RHSA-2018-1965.html                               
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-3639                            
+CWE-200 (redhat)	https://cwe.mitre.org/data/definitions/200.html                                 
+CWE-200 (nvd)   	https://cwe.mitre.org/data/definitions/200.html                                 
+Package/CPE     	kernel-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                     
+                	kernel-tools-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                               
+                	kernel-tools-libs-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                          
+                	python-perf-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-3665   
+----------------
+Max Score       	5.6 MODERATE (redhat)                                                           
+nvd             	4.7/AV:L/AC:M/Au:N/C:C/I:N/A:N                                                  
+Advisory        	6.9/-                                                                           
+redhat          	5.6/CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-3665         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-3665         
+Summary         	System software utilizing Lazy FP state restore technique on systems using Intel
+                	Core-based microprocessors may potentially allow a local process to infer data  
+                	from another process through a speculative execution side channel.              
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-3665                                  
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-3665                            
+RHSA-2018:1852  	https://rhn.redhat.com/errata/RHSA-2018-1852.html                               
+CWE-200 (redhat)	https://cwe.mitre.org/data/definitions/200.html                                 
+CWE-200 (nvd)   	https://cwe.mitre.org/data/definitions/200.html                                 
+Package/CPE     	kernel-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                     
+                	kernel-tools-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                               
+                	kernel-tools-libs-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                          
+                	python-perf-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2016-2183   
+----------------
+Max Score       	5.0 MEDIUM (nvd)                                                                
+nvd             	5.0/AV:N/AC:L/Au:N/C:P/I:N/A:N                                                  
+redhat          	4.3/AV:N/AC:M/Au:N/C:P/I:N/A:N                                                  
+Advisory        	6.9/-                                                                           
+redhat          	3.7/CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2016-2183         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2016-2183         
+Summary         	The DES and Triple DES ciphers, as used in the TLS, SSH, and IPSec protocols and
+                	other protocols and products, have a birthday bound of approximately four       
+                	billion blocks, which makes it easier for remote attackers to obtain cleartext  
+                	data via a birthday attack against a long-duration encrypted session, as        
+                	demonstrated by an HTTPS session using Triple DES in CBC mode, aka a "Sweet32"  
+                	attack.                                                                         
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2016-2183                                  
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2016-2183                            
+RHSA-2018:2123  	https://rhn.redhat.com/errata/RHSA-2018-2123.html                               
+CWE-327 (redhat)	https://cwe.mitre.org/data/definitions/327.html                                 
+CWE-200 (nvd)   	https://cwe.mitre.org/data/definitions/200.html                                 
+Package/CPE     	python-2.7.5-68.el7 -> 2.7.5-69.el7_5                                           
+                	python-libs-2.7.5-68.el7 -> 2.7.5-69.el7_5                                      
+Confidence      	100 / YumUpdateSecurityMatch                                                    
+                
+                
+CVE-2018-1091   
+----------------
+Max Score       	4.9 MEDIUM (nvd)                                                                
+nvd             	4.9/AV:L/AC:L/Au:N/C:N/I:N/A:C                                                  
+Advisory        	8.9/-                                                                           
+redhat          	4.7/CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H                                
+CVSSv2 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v2-calculator?name=CVE-2018-1091         
+CVSSv3 Calc     	https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?name=CVE-2018-1091         
+Summary         	In the flush_tmregs_to_thread function in arch/powerpc/kernel/ptrace.c in the   
+                	Linux kernel before 4.13.5, a guest kernel crash can be triggered from          
+                	unprivileged userspace during a core dump on a POWER host due to a missing      
+                	processor feature check and an erroneous use of transactional memory (TM)       
+                	instructions in the core dump path, leading to a denial of service.             
+Source          	https://nvd.nist.gov/vuln/detail/CVE-2018-1091                                  
+RHEL-CVE        	https://access.redhat.com/security/cve/CVE-2018-1091                            
+RHSA-2018:1318  	https://rhn.redhat.com/errata/RHSA-2018-1318.html                               
+CWE-391 (redhat)	https://cwe.mitre.org/data/definitions/391.html                                 
+CWE-119 (nvd)   	https://cwe.mitre.org/data/definitions/119.html                                 
+Package/CPE     	kernel-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                     
+                	kernel-tools-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                               
+                	kernel-tools-libs-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                          
+                	python-perf-3.10.0-862.el7 -> 3.10.0-862.9.1.el7                                
+Confidence      	100 / YumUpdateSecurityMatch
+
 ```
 
 
