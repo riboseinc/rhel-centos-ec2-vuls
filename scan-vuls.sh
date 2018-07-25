@@ -2,16 +2,16 @@
 #
 # scan-vuls.sh
 #
-# Setup and execute the Vuls vulnerability scanner (https://vuls.io) for RHEL/CentOS on EC2
+# Execute a Vuls (https://vuls.io) scan for RHEL/CentOS on EC2
 #
 # This script does the following:
 # 1) Create a basic localhost Vuls configuration
-# 2) Run a scan;
-# 3) Convert the json report to text;
-# 4) Display the report.
+# 2) Run a scan
+# 3) Convert the json report to text
+# 4) Display the report
 #
 # Dependencies:
-# 1) Installed Vuls (use: install-vuls.sh);
+# 1) Installed Vuls (use: install-vuls.sh)
 
 set -uo pipefail
 
