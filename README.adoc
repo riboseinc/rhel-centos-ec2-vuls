@@ -1,6 +1,6 @@
 = rhel-centos-ec2-vuls
 
-Install and execute the Vuls vulnerability scanner (https://vuls.io) for RHEL/CentOS on AWS EC2
+Installation and execution scripts of the Vuls vulnerability scanner (https://vuls.io) for RHEL/CentOS on AWS EC2
 
 
 == Description
@@ -10,20 +10,21 @@ Vuls is an open-source, agent-less vulnerability scanner based on information fr
 Use these scripts to install Vuls and run vulnerability scans on your RHEL/CentOS instance on AWS EC2.
 
 
-=== Files
+== Files
 
-* install-vuls.sh: the Vuls installation script
-* update-cve-oval.sh: a CVE/OVAL file update script
-* scan-vuls.sh: the script to perform a vulnerability scan on localhost
-* install.sh: a script to copy files to `/usr/local/bin` and run the `install-vuls.sh` script
-
-
-=== Dependencies
-
-Vuls relies on Go (https://golang.org/dl/). After you install Go please make sure the `go` binary is in the `PATH` of your own shell and `sudo`.
+* install-vuls.sh: the Vuls installation script, it downloads and compiles all dependencies (except: Go)
+* update-cve-oval.sh: a CVE/OVAL file update script that downloads CVE information from 2004 to `${currentyear}`
+* scan-vuls.sh: the script to perform a vulnerability scan on localhost, it sets up a basic local configuration and does not require any configuration
+* install.sh: a script to "install" `scan-vuls.sh` and `update-cve-oval.sh` to `/usr/local/bin` and run the `install-vuls.sh` script
 
 
-=== Installation
+== Dependencies
+
+. Vuls relies on Go (https://golang.org/dl/). After you install Go please make sure the `go` binary is in the `PATH` of your own shell and `sudo`
+. The installation of `go-cve-dictionary` relies on: `sqlite`, `git` and `gcc`
+
+
+== Installation
 
 ```sh
 git clone https://github.com/riboseinc/rhel-centos-ec2-vuls
@@ -31,7 +32,7 @@ cd rhel-centos-ec2-vuls
 sudo ./install.sh
 ```
 
-==== Example full installation on RHEL 7.5
+=== Example full installation on RHEL 7.5
 
 ```console
 $ git clone https://github.com/riboseinc/rhel-centos-ec2-vuls
@@ -217,13 +218,13 @@ install-vuls.sh: Vuls installed
 ```
 
 
-=== Scan
+== Scan
 
 ```sh
 sudo ./scan-vuls.sh
 ```
 
-==== Example scan on RHEL 7.5
+=== Example scan on RHEL 7.5
 
 ```console
 $ sudo ./scan-vuls.sh 
