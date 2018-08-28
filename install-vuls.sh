@@ -57,10 +57,18 @@ main() {
 	fi
 	chmod 700 "${vulslog}"
 
-	local -r gocvedict="github.com/kotakanbe/go-cve-dictionary"
-	echo "${__progname}: go get '${gocvedict}'"
-	go get "${gocvedict}" 2>/dev/null || \
-		errx "go get '${gocvedict}' failed"
+	local -r gocvedict="go-cve-dictionary"
+	local -r gocvedicturl="https://github.com/kotakanbe/${gocvedict}"
+	echo "${__progname}: git clone '${gocvedict}'"
+	mkdir -p "${vulspath}/src"
+	cd "${vulspath}/src"
+
+	git clone --no-progress "${gocvedicturl}" || \
+		errx "git clone '${gocvedicturl}' failed"
+
+	cd "${gocvedict}"
+	make install 2>/dev/null || \
+		errx "make install failed"
 
 	local -r govaldict="goval-dictionary"
 	local -r govaldicturl="https://github.com/kotakanbe/${govaldict}"
