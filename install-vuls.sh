@@ -68,7 +68,7 @@ main() {
 
 	cd "${gocvedict}"
 	make install 2>/dev/null || \
-		errx "make install failed"
+		errx "${gocvedict}: make install failed"
 
 	local -r govaldict="goval-dictionary"
 	local -r govaldicturl="https://github.com/kotakanbe/${govaldict}"
@@ -81,26 +81,24 @@ main() {
 
 	cd "${govaldict}"
 	make install 2>/dev/null || \
-		errx "make install failed"
+		errx "${govaldict}: make install failed"
 
 	local -r updatecveoval="/usr/local/bin/update-cve-oval.sh"
 	"${updatecveoval}" || \
 		errx "'${updatecveoval}' failed"
 
-	local -r vulsurl="https://github.com/future-architect/vuls"
+	local -r vuls="vuls"
+	local -r vulsurl="https://github.com/future-architect/${vuls}"
+	echo "${__progname}: git clone '${vuls}'"
+	mkdir -p "${vulspath}/src"
 	cd "${vulspath}/src"
 
-	echo "${__progname}: git clone '${vulsurl}'"
 	git clone --no-progress "${vulsurl}" || \
 		errx "git clone '${vulsurl}' failed"
 
-	cd vuls
-
-	make >/dev/null || \
-		errx "make failed"
-
-	make install >/dev/null || \
-		errx "make install failed"
+	cd "${vuls}"
+	make install 2>/dev/null || \
+		errx "${vuls}: make install failed"
 
 	rm -rf "${vulspath}/src"
 
