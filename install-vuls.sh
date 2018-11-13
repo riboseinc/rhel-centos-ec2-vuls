@@ -57,11 +57,14 @@ main() {
 	fi
 	chmod 700 "${vulslog}"
 
+	# deploy go-cve-dictionary
+
 	local -r gocvedict="go-cve-dictionary"
-	local -r gocvedicturl="https://github.com/kotakanbe/${gocvedict}"
+	local -r gocvedictrepo="github.com/kotakanbe"
+	local -r gocvedicturl="https://${gocvedictrepo}/${gocvedict}"
 	echo "${__progname}: git clone '${gocvedict}'"
-	mkdir -p "${vulspath}/src"
-	cd "${vulspath}/src"
+	mkdir -p "${vulspath}/src/${gocvedictrepo}"
+	cd "${vulspath}/src/${gocvedictrepo}"
 
 	git clone --no-progress "${gocvedicturl}" || \
 		errx "git clone '${gocvedicturl}' failed"
@@ -70,11 +73,14 @@ main() {
 	make install 2>/dev/null || \
 		errx "${gocvedict}: make install failed"
 
+	# deploy goval-dictionary
+
 	local -r govaldict="goval-dictionary"
-	local -r govaldicturl="https://github.com/kotakanbe/${govaldict}"
+	local -r govaldictrepo="github.com/kotakanbe"
+	local -r govaldicturl="https://${govaldictrepo}/${govaldict}"
 	echo "${__progname}: git clone '${govaldict}'"
-	mkdir -p "${vulspath}/src"
-	cd "${vulspath}/src"
+	mkdir -p "${vulspath}/src/${govaldictrepo}"
+	cd "${vulspath}/src/${govaldictrepo}"
 
 	git clone --no-progress "${govaldicturl}" || \
 		errx "git clone '${govaldicturl}' failed"
@@ -87,11 +93,14 @@ main() {
 	"${updatecveoval}" || \
 		errx "'${updatecveoval}' failed"
 
+	# deploy vuls
+
 	local -r vuls="vuls"
-	local -r vulsurl="https://github.com/future-architect/${vuls}"
+	local -r vulsrepo="github.com/future-architect"
+	local -r vulsurl="https://${vulsrepo}/${vuls}"
 	echo "${__progname}: git clone '${vuls}'"
-	mkdir -p "${vulspath}/src"
-	cd "${vulspath}/src"
+	mkdir -p "${vulspath}/src/${vulsrepo}"
+	cd "${vulspath}/src/${vulsrepo}"
 
 	git clone --no-progress "${vulsurl}" || \
 		errx "git clone '${vulsurl}' failed"
