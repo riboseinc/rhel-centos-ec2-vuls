@@ -59,8 +59,7 @@ main() {
 	cd "${vulspath}"
 
 	echo "${__progname}: running 'vuls scan'"
-	vuls scan -deep -config="${configfile}" >/dev/null || \
-		errx "vuls scan failed"
+	vuls scan -config="${configfile}" >/dev/null
 
 	# make Vuls convert the json report to text
 	echo "${__progname}: running 'vuls report'"
